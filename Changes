@@ -38,3 +38,5 @@ v 0.09 - 26 July 1999
 v 0.10 - 22 May 2000
          - added @_image_types and image_type() to use gif, jpeg or png
            according to local version of GD; modified draw() and _init()
+v 0.11 - 04 April 2001
+         - fixed bug in draw() to enable jpeg's

@@ -42,10 +42,12 @@
 #   v 0.10 - 22 May 2000
 #            - added @_image_types and image_type() to use gif, jpeg or png
 #              according to local version of GD; modified draw() and _init()
+#   v 0.11 - 04 April 2001
+#            - fixed bug in draw() to enable jpeg's
 
 package Chart::Plot;
 
-$Chart::Plot::VERSION = '0.10';
+$Chart::Plot::VERSION = '0.11'; 
 
 use GD;
 use strict;
@@ -195,6 +197,10 @@ sub draw {
       $self->{'_errorMessage'} = "The image format $_[0] is not supported by this version $GD::VERSION of GD";
       return undef;
     }
+
+    $_ = $_[0];                       # forgot these in ver 0.10 
+    return $self->{'_im'}->$_();      # an embarrassment
+
   } else {
     $_ = $_image_types[0];
     return $self->{'_im'}->$_();

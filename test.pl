@@ -29,22 +29,44 @@ eval {
 $_ = ($@ ? "Not ok 2: $@" : "Ok 2: $report.\n");
 print;
 
-my $extension;
+my @extensions;
+my ($GDobject, $black, $white);
+
 eval {
-  my $img = Chart::Plot->new; 
+  my $img = Chart::Plot->new(400,400); 
   my @data = qw( -3 9   -2 4   -1 1   0 0   1 1  2 4  3 9);
   $img->setData (\@data) or die ( $img->error() );
-  $img->setGraphOptions ('title' => 'Test A',
+  $img->setGraphOptions ('title' => 'Test Title',
                           'horAxisLabel' => 'X axis',
                           'vertAxisLabel' => 'Y axis'); 
-  $extension = $img->image_type();
-  open (WR,">testa.$extension") or die ("Failed to write file: $!");
-  binmode WR;
-  print WR $img->draw();
-  close WR;
+  @extensions = $img->image_type();
+  for (@extensions) {
+    open (WR,">test.$_") or die ("Failed to write file: $!");
+    binmode WR;
+    if ($#extensions) { # multiple image types
+      print WR $img->draw($_);
+    } else {
+      print WR $img->draw();
+    }
+    close WR;
+
+    # erase the image, fill it with white, leaving the black border
+    ($GDobject, $black, $white) = $img->getGDobject();
+    $GDobject->filledRectangle(1,1,398,398,$white);
+    
+  }
 };
-$_ = ($@ ? "Not ok 3: $@" : "Ok 3: created testa.$extension\n");
+
+$report = 'Ok 3: created test.' 
+  . join(' test.', @extensions) 
+  . ". You should check it or them.\n";
+$_ = $@ ? "Not ok 3: $@" : $report;
 print;
+
+
+__END__
+
+# older tests no longer used
 
 eval {
   my $img = Chart::Plot->new(500,400); 
@@ -84,10 +106,10 @@ eval {
     $gd->arc($px,$py,15,15,0,360,$green);
     }
 
-  $extension = $gd->can('jpeg') ? 'jpeg' : $img->image_type();
+  $extension = $img->image_type();
   open (WR,">testc.$extension") or die ("Failed to write file: $!");
   binmode WR;
-  print WR $img->draw($extension);
+  print WR $img->draw();
   close WR;
 };
 $_ = $@ ? "Not ok 5: $@" : "Ok 5: created testc.$extension\n";;

@@ -1,5 +1,5 @@
 Readme file for Chart::Plot 
-  - Plot two dimensional data in an image. Version 0.10.
+  - Plot two dimensional data in an image.
 
 I wrote Chart::Plot to create images of some simple graphs of two
 dimensional data. The other graphing interface modules to GD.pm I saw
@@ -40,7 +40,7 @@ directory. Then the usual
   make test
   make install
 
-'make test' will produce a few simple gif images, saved in files in
+'make test' will produce a few simple images, saved in files in
 the current directory. I can't think of anything that could go wrong
 unless you don't have GD.pm installed, but the file 'test.pl' does
 offer a couple of examples. It also reports your current version of GD

@@ -6,7 +6,7 @@
 #        or just install Chart::Plot
 #     Make sure there is also a writable tmp subdirectory here.
 #     Requires both GD.pm and CGI.pm.
-#     Copyright 1998 Sanford Morton <sanford@halcyon.com>.
+#     Copyright 1998 Sanford Morton <smorton@pobox.com>.
 
 use CGI::Carp qw(fatalsToBrowser carpout);
 use CGI;
